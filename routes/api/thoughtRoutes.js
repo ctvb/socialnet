@@ -15,11 +15,11 @@ router.route('/').get(getThought).post(createThought);
 // http://localhost:3001/api/thoughts/123
 router.route('/:thoughtId').get(getSingleThought);
 
-// /api/students/:studentId/assignments
+// /api/thoughts/:thoughtId/assignments
 // http://localhost:3001/api/thoughts/123/thoughts
 router.route('/:thoughtId/thoughts').put(updateThought);
 
-// /api/students/:studentId/assignments/:assignmentId
+// /api/thoughts/:thoughtId/assignments/:assignmentId
 // http://localhost:3001/api/thoughts/123/thought/125
 router.route('/:thoughtId/thought/:userId').delete(deleteThought);
 
