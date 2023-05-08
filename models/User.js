@@ -1,26 +1,17 @@
 const { Schema, model } = require('mongoose');
-const { stringify } = require('querystring');
 
-const courseSchema = new Schema(
+const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: unique,
+      required: true,
       trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      match: [ /([a - z0 -9_\.-] +)@([\da - z\.-] +) \.([a - z\.]{ 2, 6})/ ]
-    },
-    startDate: {
-      type: Date,
-      default: Date.now(),
-    },
-    endDate: {
-      type: Date,
-      default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
+      // match: [/([a - z0 -9_\.-] +)@([\da - z\.-] +) \.([a - z\.]{ 2, 6})/]
     },
     thoughts: [
       {
@@ -43,6 +34,6 @@ const courseSchema = new Schema(
   }
 );
 
-const Course = model('course', courseSchema);
+const User = model('User', userSchema);
 
-module.exports = Course;
+module.exports = User;

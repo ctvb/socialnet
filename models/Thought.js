@@ -3,7 +3,7 @@ const reactionSchema = require('./Reaction');
 const { format_date } = require('../helper');
 
 // Schema to create Student model
-const studentSchema = new Schema(
+const thoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
@@ -31,6 +31,6 @@ const studentSchema = new Schema(
   }
 );
 
-const Student = model('student', studentSchema);
+const Thought = model('Thought', thoughtSchema);
 
-module.exports = Student;
+module.exports = Thought;
