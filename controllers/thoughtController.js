@@ -1,5 +1,4 @@
 // ObjectId() method for converting thoughtId string into an ObjectId for querying database
-const { ObjectId } = require('mongoose').Types;
 const { Thought, User } = require('../models');
 
 module.exports = {
@@ -31,7 +30,13 @@ module.exports = {
   // create a new thought
   createThought(req, res) {
     Thought.create(req.body)
-      .then((thought) => res.json(thought))
+      .then((thought) => {
+        return User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $push: { thoughts: thought._id } },
+          { new: true }
+        )
+        }).then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
   // Delete a thought and remove them from the user
@@ -48,10 +53,10 @@ module.exports = {
       )
       .then((user) =>
         !user
-          ? res.status(404).json({
+          ? res.status(400).json({
               message: 'Thought deleted, but no users found',
             })
-          : res.json({ message: 'Thought successfully deleted' })
+          : res.status(200).json({ message: 'Thought successfully deleted' })
       )
       .catch((err) => {
         console.log(err);
@@ -67,7 +72,7 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No user with this id!' })
-          : res.json(user)
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
